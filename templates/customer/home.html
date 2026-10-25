@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+
+    <style>
+
+        body{
+            margin: 0;
+            font-family: Arial;
+            background-color: #f4f6f9;
+
+            overflow: hidden;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            background-color: #667eea;
+            color: white;
+            padding: 15px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a{
+            text-decoration: none;
+            color: white;
+            background-color: #5a67d8;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .navbar a:hover{
+            background-color: #434190;
+        }
+
+        /* MAIN SECTION */
+
+        .main{
+            display: flex;
+            padding: 20px;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width: 20%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            
+
+            height: 77vh;
+
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-start;
+        }
+        .login{
+            align-items: end;
+        }
+
+        .sidebar h3{
+            margin-top: 0;
+        }
+
+        .sidebar select{
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+
+        .sidebar label{
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* USER SECTION */
+
+        .user-section{
+            margin-top: 40px;
+        }
+
+        .user-section a{
+            text-decoration: none;
+            color: white;
+            background-color: #667eea;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* PRODUCTS SECTION */
+
+        .products{
+            width: 83%;
+            margin-left: 15px;
+
+            height: 85vh;
+            overflow-y: auto;
+        }
+
+        .products h1{
+            margin-top: 0;
+        }
+
+        /* PRODUCT CARD */
+
+        .product-card{
+            background-color: white;
+            width: 95%;
+
+            padding: 20px;
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-left{
+            display: flex;
+            align-items: center;
+        }
+
+        .product-image{
+            width: 120px;
+            height: 120px;
+            background-color: #ddd;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .product-image img{
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info h2{
+            margin: 0;
+        }
+
+        .product-info p{
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        /* BUTTON */
+
+        .cart-btn{
+            background-color: #667eea;
+            color: white;
+
+            border: none;
+
+            padding: 12px 18px;
+
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-btn:hover{
+            background-color: #5a67d8;
+        }
+
+        /* FLASH MESSAGE */
+
+        .flash{
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .navbar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:15px 30px;
+        }
+
+        .search-form{
+            display:flex;
+            align-items:center;
+            width:40%;
+        }
+
+        .search-form input{
+            flex:1;
+            padding:10px 15px;
+            border:1px solid hsl(212, 74%, 5%);  
+            border-radius: 5px;
+            outline:none;
+            font-size:15px;
+        }
+
+        .search-form button{
+            background-color: #5a67d8;
+            color: white;
+
+            padding:10px 20px;
+            border: 1px;
+            border-radius: 5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .search-form button:hover{
+            background-color: #424a94;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class="flash">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2>E-Commerce Store</h2>
+
+            <form class="search-form" method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search product"
+                    value="{{ request.args.get('search', '') }}">
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        <div>
+            <a href="/customer/my_order">My Order</a>
+            <a href="/customer/cart">
+                🛒 Cart
+            </a>       
+        </div>
+
+    </div>
+
+    <!-- MAIN SECTION -->
+
+    <div class="main">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <h3>Filters</h3>
+
+            <form method="GET">
+
+                <p><b>Sort By Price</b></p>
+
+                <label>
+                    <input type="radio" name="price" value="high">
+                    Price : High → Low
+                </label>
+
+                <label>
+                    <input type="radio" name="price" value="low">
+                    Price : Low → High
+                </label>
+
+                <p><b>Category</b></p>
+
+        <select name="category">
+
+            <option value="">Select Category</option>
+
+                {% for category in categories %}
+
+                <option value="{{ category.cat_id }}">
+
+                {{ category.cat_name }}
+
+    </option>
+
+            {% endfor %}
+
+</select>
+
+                <br><br>
+
+                <button type="submit" class="cart-btn">
+                Filter
+                </button>
+
+            </form>
+
+            <!-- USER SECTION -->
+
+            <div class="user-section">
+
+                {% if 'user' in session %}
+
+                    <h3>Welcome {{ session['user'] }}</h3>
+
+                    <a href="/logout">Logout</a>
+
+                {% else %}
+                    <div class="login"> 
+                    <a href="/login">Login</a>
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- PRODUCTS -->
+
+        <div class="products">
+
+            <h2>All Products</h2>
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                <div class="product-left">
+
+                    
+                        <img src="{{ url_for('static', filename='uploads/' ~ product.image_url) }}"
+                        alt="{{ product.product_name }}"
+                        class="product-image">
+                    
+
+                    <div class="product-info">
+
+                        <h2>{{ product.product_name }}</h2>
+
+                        <p>Price: ₹{{ product.price }}</p>
+                        <p>stock: {{product.stock}}</p>
+
+                    </div>
+
+                </div>
+
+                <a href="/customer/add-to-cart/{{ product.product_id }}"
+                    class="cart-btn">
+
+                        Add to Cart
+
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

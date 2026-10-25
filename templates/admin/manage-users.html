@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Orders</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Manage users (Top 10 Latest users)</h2>
+
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>User name</th>
+            
+            <th>Email ID</th>
+            <th>Role</th>
+            <th>To delete</th>
+
+            <th>Change Role</th>
+            <th>Submit</th>
+
+            
+            
+        </tr>
+
+        {% for user in users %}
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <a class="delete-btn"
+                   href="/admin/manage-users?delete={{ user.user_id }}"
+                   onclick="return confirm('Are you sure you want to delete this user?')">
+                    Delete
+                </a>
+            </td>
+
+        <td>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ user.user_id }}">
+
+                <select name="role">
+
+                    <option value="customer">select</option>
+
+                    <option value="customer">customer</option>
+
+                    <option value="seller">seller</option>
+
+                    <option value="admin">admin</option>
+
+                </select>
+
+        </td>
+
+        <td>
+
+                <button type="submit">
+                    Apply
+                </button>
+
+            </form>
+
+        </td>
+
+        </tr>
+
+
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order</title>
+
+    <style>
+
+        body{
+            margin: 0;
+            font-family: Arial;
+            background-color: #f4f6f9;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            background-color: #667eea;
+            color: white;
+
+            padding: 20px 30px;
+        }
+
+        /* MAIN */
+
+        .main{
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width: 25%;
+            background-color: white;
+
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+
+            height: fit-content;
+        }
+
+        .sidebar h2{
+            margin-top: 0;
+        }
+
+        .user-info p{
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        /* FORM SECTION */
+
+        .order-section{
+            flex: 1;
+
+            background-color: white;
+
+            padding: 30px;
+            border-radius: 10px;
+
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        .order-section h2{
+            margin-top: 0;
+        }
+
+        .form-group{
+            margin-bottom: 20px;
+        }
+
+        .form-group label{
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea{
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+            font-size: 16px;
+
+            box-sizing: border-box;
+        }
+
+        textarea{
+            resize: none;
+            height: 120px;
+        }
+
+        /* BUTTON */
+
+        .confirm-btn{
+            background-color: #667eea;
+            color: white;
+
+            border: none;
+
+            padding: 14px 22px;
+
+            font-size: 16px;
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .confirm-btn:hover{
+            background-color: #5a67d8;
+            transform: scale(1.03);
+        }
+
+        /* FLASH MESSAGE */
+
+        .flash{
+            background-color: #c6f6d5;
+            color: #22543d;
+
+            padding: 15px;
+            border-radius: 5px;
+
+            margin-bottom: 20px;
+
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>E-Commerce Store</h2>
+
+    </div>
+
+    <div class="main">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <h2>User Information</h2>
+
+            <div class="user-info">
+
+                <p><b>Name:</b> {{ user.name }}</p>
+
+                <p><b>Email:</b> {{ user.email }}</p>
+
+                <p><b>City:</b> {{ user.address }}</p>
+
+            </div>
+
+        </div>
+
+        <!-- MAIN FORM -->
+
+        <div class="order-section">
+
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="flash">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+            <h2>Shipping Address</h2>
+
+            <form method="POST">
+
+                <div class="form-group">
+
+                    <label>Enter Full Address</label>
+
+                    <textarea
+                        name="address"
+                        required>
+                    </textarea>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="confirm-btn">
+
+                    Confirm Order
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

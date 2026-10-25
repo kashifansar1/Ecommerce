@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Orders</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Hello Seller Manage your Orders </h2>
+
+
+<hr>
+
+<!-- Display Products -->
+<table>
+
+    
+    <tr>
+        <th>Name</th>
+        <th>Item ID</th>
+        <th>Order ID</th>
+        <th>Product ID</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Product Name</th>
+        <th>Shipping Address</th>
+        <th>Amount</th>
+
+        </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.order.customer.first_name }}</td>
+
+        <td>{{ order.item_id }}</td>
+
+        <td>{{ order.order_id }}</td>
+
+        <td>{{ order.product_id }}</td>
+
+        <td>{{ order.quantity }}</td>
+
+        <td>{{ order.status }}</td>
+
+        <td>{{ order.product.product_name }}</td>
+
+        <td>{{ order.order.shipping_address }}</td>
+
+        <td>{{ order.quantity * order.product.price }}</td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+
+<hr>
+
+<form method="POST">
+
+
+     <!-- Select item_id Dropdown -->
+    <select name="item_id" required>
+
+        <option value="">Select Item ID</option>
+
+        {% for orderss in orders %}
+
+        <option value="{{ orderss.item_id }}">{{ orderss.item_id }}</option>
+
+        {% endfor %}
+
+    </select>   
+
+    
+    <!-- Status Dropdown -->
+    <select name="statuss" required>
+
+        <option value="">Select Status</option>
+
+        {% for statuss in status %}
+
+        <option value="{{ statuss }}">{{ statuss }}</option>
+
+        {% endfor %}
+
+    </select>
+
+    
+    <button type="submit">Update Status</button>
+
+</form>
+
+
+</body>
